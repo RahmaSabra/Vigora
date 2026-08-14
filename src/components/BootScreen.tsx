@@ -59,7 +59,7 @@ export default function BootScreen() {
   });
   return (
     <div className="h-screen w-screen flex items-center justify-center">
-      <div className="logo flex items-center text-white scale-[5] gap-x-0.5">
+      <div className="logo flex items-center text-white scale-[4] gap-x-0.5">
         <svg
           id="v"
           className="w-16 h-16"
