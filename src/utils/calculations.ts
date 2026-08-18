@@ -32,7 +32,6 @@ export function calculateTDEE(
   sex: "male" | "female",
   height: number,
   weight: number,
-  trainingFrequency: number | undefined,
   activityLevel: ActivityLevel,
 ): number {
   const bmr = calculateBMR(age, sex, weight, height);
@@ -46,8 +45,7 @@ export function calculateTDEE(
           : activityLevel === "very"
             ? 1.725
             : 1.9;
-  const trainingCalories = trainingFrequency ? trainingFrequency * 50 : 0;
-  const tdee = bmr * multipliedNumber + trainingCalories;
+  const tdee = bmr * multipliedNumber;
   return tdee;
 }
 
@@ -56,19 +54,11 @@ export function calculateCalorieTarget(
   sex: "male" | "female",
   height: number,
   weight: number,
-  trainingFrequency: number | undefined,
   goal: TrainingGoal | NonTrainingGoal,
   activityLevel: ActivityLevel,
   pace?: Pace,
 ): number {
-  const tdee = calculateTDEE(
-    age,
-    sex,
-    height,
-    weight,
-    trainingFrequency,
-    activityLevel,
-  );
+  const tdee = calculateTDEE(age, sex, height, weight, activityLevel);
   let calorieEstimate = tdee;
   if (goal === "lose fat" || goal === "lose weight" || goal === "recompose") {
     if (pace === "fast") {
@@ -134,7 +124,6 @@ export function calculateNutritionTargets(
   height: number,
   weight: number,
   resistanceTraining: boolean,
-  trainingFrequency: number | undefined,
   goal: TrainingGoal,
   activityLevel: ActivityLevel,
   pace?: Pace,
@@ -144,7 +133,6 @@ export function calculateNutritionTargets(
     sex,
     height,
     weight,
-    trainingFrequency,
     goal,
     activityLevel,
     pace,
