@@ -19,7 +19,7 @@ export type Pace = "slow" | "moderate" | "fast";
 
 export type OnboardingData =
   | {
-      age: number;
+      dob: string;
       sex: "male" | "female";
       height: number;
       weight: number;
@@ -30,7 +30,7 @@ export type OnboardingData =
       pace?: Pace;
     }
   | {
-      age: number;
+      dob: string;
       sex: "male" | "female";
       height: number;
       weight: number;

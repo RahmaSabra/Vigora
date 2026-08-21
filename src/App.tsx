@@ -1,5 +1,4 @@
-import BootScreen from "./components/BootScreen";
-
+import ProgressBar from "./components/onboarding/Progressbar";
 export default function App() {
-  return <BootScreen />;
+  return <ProgressBar currentStep={8} totalSteps={8} />;
 }

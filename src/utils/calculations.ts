@@ -6,6 +6,22 @@ import type {
   NutritionTargets,
 } from "../../types/onboarding";
 
+export function calculateAge(dob: string): number {
+  const dateOfBirth = new Date(dob);
+  const currentDate = new Date();
+  const monthDiff = currentDate.getMonth() + 1 - dateOfBirth.getMonth();
+
+  let age = currentDate.getFullYear() - dateOfBirth.getFullYear();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && currentDate.getDate() < dateOfBirth.getDate())
+  ) {
+    age--;
+  }
+  return age;
+}
+
 export function calculateBMI(weight: number, height: number): number {
   const squaredHeight = (height / 100) ** 2;
   const bmi = weight / squaredHeight;
@@ -13,28 +29,28 @@ export function calculateBMI(weight: number, height: number): number {
 }
 
 export function calculateBMR(
-  age: number,
+  dob: string,
   sex: "male" | "female",
   weight: number,
   height: number,
 ): number {
   let bmr: number;
   if (sex === "male") {
-    bmr = weight * 10 + height * 6.25 - 5 * age + 5;
+    bmr = weight * 10 + height * 6.25 - 5 * calculateAge(dob) + 5;
   } else {
-    bmr = weight * 10 + height * 6.25 - 5 * age - 161;
+    bmr = weight * 10 + height * 6.25 - 5 * calculateAge(dob) - 161;
   }
   return bmr;
 }
 
 export function calculateTDEE(
-  age: number,
+  dob: string,
   sex: "male" | "female",
   height: number,
   weight: number,
   activityLevel: ActivityLevel,
 ): number {
-  const bmr = calculateBMR(age, sex, weight, height);
+  const bmr = calculateBMR(dob, sex, weight, height);
   const multipliedNumber =
     activityLevel === "sedentary"
       ? 1.2
@@ -50,7 +66,7 @@ export function calculateTDEE(
 }
 
 export function calculateCalorieTarget(
-  age: number,
+  dob: string,
   sex: "male" | "female",
   height: number,
   weight: number,
@@ -58,7 +74,7 @@ export function calculateCalorieTarget(
   activityLevel: ActivityLevel,
   pace?: Pace,
 ): number {
-  const tdee = calculateTDEE(age, sex, height, weight, activityLevel);
+  const tdee = calculateTDEE(dob, sex, height, weight, activityLevel);
   let calorieEstimate = tdee;
   if (goal === "lose fat" || goal === "lose weight" || goal === "recompose") {
     if (pace === "fast") {
@@ -119,17 +135,17 @@ export function calculateFat(
 }
 
 export function calculateNutritionTargets(
-  age: number,
+  dob: string,
   sex: "male" | "female",
   height: number,
   weight: number,
   resistanceTraining: boolean,
-  goal: TrainingGoal,
+  goal: TrainingGoal | NonTrainingGoal,
   activityLevel: ActivityLevel,
   pace?: Pace,
 ): NutritionTargets {
   const calories = calculateCalorieTarget(
-    age,
+    dob,
     sex,
     height,
     weight,
