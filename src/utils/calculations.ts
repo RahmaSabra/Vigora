@@ -70,8 +70,8 @@ export function calculateCalorieTarget(
   sex: "male" | "female",
   height: number,
   weight: number,
-  goal: TrainingGoal | NonTrainingGoal,
   activityLevel: ActivityLevel,
+  goal: TrainingGoal | NonTrainingGoal,
   pace?: Pace,
 ): number {
   const tdee = calculateTDEE(dob, sex, height, weight, activityLevel);
@@ -140,8 +140,8 @@ export function calculateNutritionTargets(
   height: number,
   weight: number,
   resistanceTraining: boolean,
-  goal: TrainingGoal | NonTrainingGoal,
   activityLevel: ActivityLevel,
+  goal: TrainingGoal | NonTrainingGoal,
   pace?: Pace,
 ): NutritionTargets {
   const calories = calculateCalorieTarget(
@@ -149,8 +149,9 @@ export function calculateNutritionTargets(
     sex,
     height,
     weight,
-    goal,
     activityLevel,
+    goal,
+
     pace,
   );
   const protein = calculateProtein(weight, resistanceTraining, goal);
