@@ -1,4 +1,5 @@
-import ProgressBar from "./components/onboarding/Progressbar";
+import Onboarding from "./components/onboarding/Onboarding";
+
 export default function App() {
-  return <ProgressBar currentStep={8} totalSteps={8} />;
+  return <Onboarding />;
 }

@@ -17,6 +17,17 @@ export type ActivityLevel =
 
 export type Pace = "slow" | "moderate" | "fast";
 
+export type OnboardingState = {
+  dob?: string;
+  sex?: "male" | "female";
+  height?: number;
+  weight?: number;
+  resistanceTraining?: boolean;
+  activityLevel?: ActivityLevel;
+  goal?: TrainingGoal | NonTrainingGoal;
+  pace?: Pace;
+};
+
 export type OnboardingData =
   | {
       dob: string;
@@ -24,9 +35,8 @@ export type OnboardingData =
       height: number;
       weight: number;
       resistanceTraining: true;
-      trainingFrequency: number;
-      goal: TrainingGoal;
       activityLevel: ActivityLevel;
+      goal: TrainingGoal;
       pace?: Pace;
     }
   | {
